@@ -3,6 +3,7 @@ package com.example.mainmodule;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -18,11 +19,20 @@ import android.widget.ImageView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
+
+import org.opencv.android.Utils;
+import org.opencv.core.CvType;
+import org.opencv.core.Mat;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.Call;
+import okhttp3.Response;
 
 public class Activity_2 extends AppCompatActivity {
 
@@ -32,6 +42,7 @@ public class Activity_2 extends AppCompatActivity {
     //Список
     ArrayList<photoData> photoDat = new ArrayList<photoData>();
 
+    @SuppressLint("StaticFieldLeak")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -98,6 +109,29 @@ public class Activity_2 extends AppCompatActivity {
 
             }
         });
+
+        /* HttpRequestExample */
+        ImageProcessor imgProcessor = new ImageProcessor(this);
+        Mat img = imgProcessor.loadTestCV2Image();
+        String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
+        Gson gson = new Gson();
+        HttpRequest req = new HttpRequest(this);
+        req.executeMethod(base64Image, ".jpg",
+                new HttpAsyncTask() {
+                    @Override
+                    protected void onPostExecute(String result) {
+                        super.onPostExecute(result);
+                        if (result != null) {
+                            Base64Image image = gson.fromJson(result, Base64Image.class);
+
+                            Mat mat = imgProcessor.base64ToCV2Image(image.image);
+
+                            Bitmap bmp = imgProcessor.matToBitmap(mat);
+                            ImageView imageView = findViewById(R.id.imageView);
+                            imageView.setImageBitmap(bmp);
+                        }
+                    }
+                });
     }
 
     @Override
