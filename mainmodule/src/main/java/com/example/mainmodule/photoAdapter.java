@@ -46,9 +46,9 @@ public class photoAdapter  extends RecyclerView.Adapter<photoAdapter.ViewHolder>
         ViewHolder(View view){
             super(view);
             flagView = view.findViewById(R.id.photo);
-            nameView = view.findViewById(R.id.name);
-            capitalView = view.findViewById(R.id.comment);
-            dataView = view.findViewById(R.id.DataView);
+            nameView = view.findViewById(R.id.foto_name_View);
+            capitalView = view.findViewById(R.id.foto_comment_View);
+            dataView = view.findViewById(R.id.fotoDateView);
         }
     }
 }

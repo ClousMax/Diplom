@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
@@ -96,22 +97,47 @@ public class Activity_2 extends AppCompatActivity {
             public void onClick(View view) {
                 TextInputEditText name = (TextInputEditText) findViewById(R.id.TextInputName);
                 TextInputEditText comment = (TextInputEditText) findViewById(R.id.TextInputComments);
-                ImageView img = (ImageView) findViewById(R.id.imageView);
-                photoData photo = new photoData(name.getText().toString(),comment.getText().toString(),14,R.drawable.eagle);
+                ImageView imag = (ImageView) findViewById(R.id.imageView);
+                if (imag.getDrawable() != null){
+                Bitmap bitmap = ((BitmapDrawable)imag.getDrawable()).getBitmap();
+
+                ImageProcessor imgProcessor = new ImageProcessor(Activity_2.this);
+                Mat img = imgProcessor.bitmapToMat(bitmap);
+                String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
+                Gson gson = new Gson();
+                HttpRequest req = new HttpRequest(Activity_2.this);
+                req.executeMethod(base64Image, ".jpg",
+                        new HttpAsyncTask() {
+                            @Override
+                            protected void onPostExecute(String result) {
+                                super.onPostExecute(result);
+                                if (result != null) {
+                                    Base64Image image = gson.fromJson(result, Base64Image.class);
+
+                                    Mat mat = imgProcessor.base64ToCV2Image(image.image);
+
+                                    Bitmap bmp = imgProcessor.matToBitmap(mat);
+                                    ImageView imageView = findViewById(R.id.imageView);
+                                    imageView.setImageBitmap(bmp);
+                                }
+                            }
+                         });}
+
+              /*  photoData photo = new photoData(name.getText().toString(),comment.getText().toString(),14,R.drawable.eagle);
                 photoDat.add(photo);
-                //посылка значения в mainactivity
-                Intent intent = new Intent(Activity_2.this, MainActivity.class);
+                //посылка значения в mainactivity И ОТРКРЫТИЕ ТРЕТЬЕЙ АКТИВНОСТИ
+                Intent intent = new Intent(Activity_2.this, ActivityPhoto.class);
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("value", photoDat);
                 intent.putExtras(bundle);
-                startActivity(intent);
+                startActivity(intent); */
 
 
             }
         });
 
         /* HttpRequestExample */
-        ImageProcessor imgProcessor = new ImageProcessor(this);
+        /* ImageProcessor imgProcessor = new ImageProcessor(this);
         Mat img = imgProcessor.loadTestCV2Image();
         String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
         Gson gson = new Gson();
@@ -131,7 +157,7 @@ public class Activity_2 extends AppCompatActivity {
                             imageView.setImageBitmap(bmp);
                         }
                     }
-                });
+                });*/
     }
 
     @Override
