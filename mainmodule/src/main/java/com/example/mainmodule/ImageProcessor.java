@@ -12,6 +12,7 @@ import org.opencv.android.Utils;
 import org.opencv.core.MatOfByte;
 import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
+import org.opencv.imgproc.Imgproc;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -32,13 +33,14 @@ public class ImageProcessor {
     {
         String imgPath = getPath("test.jpg", context);
         Mat img = Imgcodecs.imread(imgPath, Imgcodecs.IMREAD_COLOR);
+        Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2RGB);
         return img;
     }
 
     public Mat bitmapToMat(Bitmap bmp)
     {
         Mat img = new Mat();
-        Utils.bitmapToMat(bmp, img);
+        Utils.bitmapToMat(bmp, img); //Return RGB
         return img;
     }
 
