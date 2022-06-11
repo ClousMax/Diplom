@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+mainmodule/src/main/assets/baseUrl.txt
