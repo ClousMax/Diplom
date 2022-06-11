@@ -10,6 +10,6 @@
     <color name="mainGreen">#3A9258</color>
     <color name="secondGreen">#25643B</color>
     <color name="backgroundGrey">#808080</color>
-
+    <color name="buttonLabel">#FFFFFF</color>
 
 </resources>

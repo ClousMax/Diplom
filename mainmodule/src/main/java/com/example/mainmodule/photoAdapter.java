@@ -42,13 +42,13 @@ public class photoAdapter  extends RecyclerView.Adapter<photoAdapter.ViewHolder>
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView flagView;
-        final TextView nameView, capitalView,dataView;
+        final TextView nameView, capitalView,dateView;
         ViewHolder(View view){
             super(view);
             flagView = view.findViewById(R.id.photo);
             nameView = view.findViewById(R.id.foto_name_View);
             capitalView = view.findViewById(R.id.foto_comment_View);
-            dataView = view.findViewById(R.id.fotoDateView);
+            dateView = view.findViewById(R.id.fotoDateView);
         }
     }
 }

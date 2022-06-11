@@ -13,6 +13,7 @@ import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +38,8 @@ import okhttp3.Response;
 
 public class Activity_2 extends AppCompatActivity {
 
+    public static final String EXTRA_REPLY1 = "com.example.android.wordlistsql.REPLY1";
+    public static final String EXTRA_REPLY2 = "com.example.android.wordlistsql.REPLY2";
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_GALLERY_PHOTO = 2;
     private ImageView imageView;
@@ -90,6 +93,39 @@ public class Activity_2 extends AppCompatActivity {
 
             }
         });
+
+        // Кнопка обработки
+        FloatingActionButton editBTN = (FloatingActionButton) findViewById(R.id.editBTN);
+        editBTN.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                ImageView imag = (ImageView) findViewById(R.id.imageView);
+                if (imag.getDrawable() != null){
+                    Bitmap bitmap = ((BitmapDrawable)imag.getDrawable()).getBitmap();
+
+                    ImageProcessor imgProcessor = new ImageProcessor(Activity_2.this);
+                    Mat img = imgProcessor.bitmapToMat(bitmap);
+                    String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
+                    Gson gson = new Gson();
+                    HttpRequest req = new HttpRequest(Activity_2.this);
+                    req.executeMethod(base64Image, ".jpg",
+                            new HttpAsyncTask() {
+                                @Override
+                                protected void onPostExecute(String result) {
+                                    super.onPostExecute(result);
+                                    if (result != null) {
+                                        Base64Image image = gson.fromJson(result, Base64Image.class);
+
+                                        Mat mat = imgProcessor.base64ToCV2Image(image.image);
+
+                                        Bitmap bmp = imgProcessor.matToBitmap(mat);
+                                        ImageView imageView = findViewById(R.id.imageView);
+                                        imageView.setImageBitmap(bmp);
+                                    }
+                                }
+                            });}
+            }
+        });
 //Кнопка продолжить
         Button continueBtn = findViewById(R.id.continueBTN);
         continueBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,31 +133,7 @@ public class Activity_2 extends AppCompatActivity {
             public void onClick(View view) {
                 TextInputEditText name = (TextInputEditText) findViewById(R.id.TextInputName);
                 TextInputEditText comment = (TextInputEditText) findViewById(R.id.TextInputComments);
-                ImageView imag = (ImageView) findViewById(R.id.imageView);
-                if (imag.getDrawable() != null){
-                Bitmap bitmap = ((BitmapDrawable)imag.getDrawable()).getBitmap();
 
-                ImageProcessor imgProcessor = new ImageProcessor(Activity_2.this);
-                Mat img = imgProcessor.bitmapToMat(bitmap);
-                String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
-                Gson gson = new Gson();
-                HttpRequest req = new HttpRequest(Activity_2.this);
-                req.executeMethod(base64Image, ".jpg",
-                        new HttpAsyncTask() {
-                            @Override
-                            protected void onPostExecute(String result) {
-                                super.onPostExecute(result);
-                                if (result != null) {
-                                    Base64Image image = gson.fromJson(result, Base64Image.class);
-
-                                    Mat mat = imgProcessor.base64ToCV2Image(image.image);
-
-                                    Bitmap bmp = imgProcessor.matToBitmap(mat);
-                                    ImageView imageView = findViewById(R.id.imageView);
-                                    imageView.setImageBitmap(bmp);
-                                }
-                            }
-                         });}
 
               /*  photoData photo = new photoData(name.getText().toString(),comment.getText().toString(),14,R.drawable.eagle);
                 photoDat.add(photo);
@@ -136,28 +148,6 @@ public class Activity_2 extends AppCompatActivity {
             }
         });
 
-        /* HttpRequestExample */
-        /* ImageProcessor imgProcessor = new ImageProcessor(this);
-        Mat img = imgProcessor.loadTestCV2Image();
-        String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
-        Gson gson = new Gson();
-        HttpRequest req = new HttpRequest(this);
-        req.executeMethod(base64Image, ".jpg",
-                new HttpAsyncTask() {
-                    @Override
-                    protected void onPostExecute(String result) {
-                        super.onPostExecute(result);
-                        if (result != null) {
-                            Base64Image image = gson.fromJson(result, Base64Image.class);
-
-                            Mat mat = imgProcessor.base64ToCV2Image(image.image);
-
-                            Bitmap bmp = imgProcessor.matToBitmap(mat);
-                            ImageView imageView = findViewById(R.id.imageView);
-                            imageView.setImageBitmap(bmp);
-                        }
-                    }
-                });*/
     }
 
     @Override
