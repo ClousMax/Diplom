@@ -14,8 +14,9 @@ import java.util.concurrent.Executors;
 @Database(entities = {FotoData.class}, version = 1, exportSchema = false)
 public abstract class fotoRoomDatabase extends RoomDatabase {
 
+     abstract FotoDao fotoDao();
+
     private static volatile fotoRoomDatabase INSTANCE;
-    public abstract FotoDao fotoDao();
     private static final int NUMBER_OF_THREADS = 4;
 
     static final ExecutorService databaseWriteExecutor =
@@ -27,7 +28,7 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     fotoRoomDatabase.class, "foto_database")
-                            //.addCallback(sFotoDatabaseCallback)
+                            .addCallback(sFotoDatabaseCallback)
                             .build();
 
                 }
@@ -48,7 +49,7 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
                 FotoDao dao = INSTANCE.fotoDao();
                 dao.deleteAll();
 
-                FotoData word = new FotoData("Название","Комментарий");
+                FotoData word = new FotoData("Name","Kek");
                 dao.insert(word);
             });
         }
