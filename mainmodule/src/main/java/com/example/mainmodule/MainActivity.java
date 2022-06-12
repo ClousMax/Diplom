@@ -22,11 +22,12 @@ import org.opencv.core.Mat;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
 //Создание списка
-    ArrayList<photoData> photoDt = new ArrayList<photoData>();
+//    ArrayList<photoData> photoDt = new ArrayList<photoData>();
     private FotoViewModel mFotoViewModel;
     public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
@@ -55,15 +56,15 @@ public class MainActivity extends AppCompatActivity {
         myFab.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-               Intent intent = new Intent(MainActivity.this, Activity_2.class);
+                Intent intent = new Intent(MainActivity.this, Activity_2.class);
                 Bundle bundle = new Bundle();
-                bundle.putSerializable("photoData", photoDt);
+//                bundle.putSerializable("photoData", photoDt);
                 intent.putExtras(bundle);
                 startActivity(intent);
-
+                    
             }
         });
-        }
+    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -84,11 +85,11 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         Intent intent = this.getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle!=null){
-            photoDt = (ArrayList<photoData>) bundle.getSerializable("value");
-        }
-        RecyclerView recyclerView = findViewById(R.id.recyclerOnMain);
-        photoAdapter adapter = new photoAdapter(this, photoDt);
-        recyclerView.setAdapter(adapter);
+//        if(bundle!=null){
+//            photoDt = (ArrayList<photoData>) bundle.getSerializable("value");
+//        }
+//        RecyclerView recyclerView = findViewById(R.id.recyclerOnMain);
+//        photoAdapter adapter = new photoAdapter(this, photoDt);
+//        recyclerView.setAdapter(adapter);
     }
 }
