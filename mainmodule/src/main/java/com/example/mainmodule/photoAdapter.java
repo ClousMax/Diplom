@@ -40,6 +40,7 @@ public class photoAdapter  extends RecyclerView.Adapter<photoAdapter.ViewHolder>
         return photoDa.size();
     }
 
+
     public static class ViewHolder extends RecyclerView.ViewHolder {
         final ImageView flagView;
         final TextView nameView, capitalView,dateView;

@@ -28,5 +28,6 @@ public class FotoListAdapter extends ListAdapter<FotoData, FotoViewHolder> {
         public boolean areContentsTheSame(@NonNull FotoData oldItem, @NonNull FotoData newItem) {
             return oldItem.getId()==newItem.getId();
         }
+
     }
 }

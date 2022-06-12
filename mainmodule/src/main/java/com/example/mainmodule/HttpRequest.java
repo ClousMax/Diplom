@@ -63,6 +63,7 @@ public class HttpRequest {
 }
 
 class HttpAsyncTask extends AsyncTask<Call, Void, String> {
+
     @Override
     public String doInBackground(Call... call) {
         try {

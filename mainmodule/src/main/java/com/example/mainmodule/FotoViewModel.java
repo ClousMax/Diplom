@@ -17,6 +17,7 @@ public class FotoViewModel extends AndroidViewModel {
         mRepository = new FotoRepository(application);
         mAllFoto = mRepository.getAllFoto();
     }
+
     LiveData<List<FotoData>> getAllFoto() { return mAllFoto; }
 
     public void insert(FotoData foto) { mRepository.insert(foto); }

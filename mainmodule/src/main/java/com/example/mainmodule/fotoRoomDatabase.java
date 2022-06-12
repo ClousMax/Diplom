@@ -14,7 +14,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {FotoData.class}, version = 1, exportSchema = false)
 public abstract class fotoRoomDatabase extends RoomDatabase {
 
-     abstract FotoDao fotoDao();
+    abstract FotoDao fotoDao();
 
     private static volatile fotoRoomDatabase INSTANCE;
     private static final int NUMBER_OF_THREADS = 4;

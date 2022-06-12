@@ -7,22 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+//import android.util.Log;
 import android.view.View;
-import android.widget.AbsListView;
-import android.widget.ImageView;
+//import android.widget.AbsListView;
+//import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.squareup.picasso.Picasso;
-
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+//import com.squareup.picasso.Picasso;
+//
+//import org.opencv.android.Utils;
+//import org.opencv.core.CvType;
+//import org.opencv.core.Mat;
+//
+//import java.io.IOException;
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
