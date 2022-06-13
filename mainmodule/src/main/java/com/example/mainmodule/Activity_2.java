@@ -114,7 +114,7 @@ public class Activity_2 extends AppCompatActivity {
                                 protected void onPostExecute(String result) {
                                     super.onPostExecute(result);
                                     if (result != null) {
-                                        Base64Image image = gson.fromJson(result, Base64Image.class);
+                                        RecognitionResult image = gson.fromJson(result, RecognitionResult.class);
 
                                         Mat mat = imgProcessor.base64ToCV2Image(image.image);
 

@@ -84,3 +84,11 @@ class Base64Image {
     public String image;
     public String extension;
 }
+
+class RecognitionResult {
+    public String image;
+    public String extension;
+    public String value;
+    public String log_count;
+    public String coeff;
+}
