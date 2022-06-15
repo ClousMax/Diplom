@@ -29,6 +29,7 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
                             .addCallback(sFotoDatabaseCallback)
                             .build();
 
+
                 }
             }
         }

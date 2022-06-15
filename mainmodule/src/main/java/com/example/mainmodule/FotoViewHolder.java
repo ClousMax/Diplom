@@ -27,5 +27,6 @@ public class FotoViewHolder extends RecyclerView.ViewHolder {
         return new FotoViewHolder(view);
     }
 
+
 }
 

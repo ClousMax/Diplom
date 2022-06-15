@@ -76,6 +76,7 @@ public class ImageProcessor {
         return "";
     }
 
+
     public String cv2ImageTobase64(Mat image, String extension)
     {
         MatOfByte buf = new MatOfByte();

@@ -99,6 +99,7 @@ public class Activity_2 extends AppCompatActivity {
             }
         });
 //Кнопка продолжить и переслать данные
+
         Button continueBtn = findViewById(R.id.continueBTN);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

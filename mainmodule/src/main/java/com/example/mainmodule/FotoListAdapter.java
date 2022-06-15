@@ -22,6 +22,7 @@ public class FotoListAdapter extends ListAdapter<FotoData, FotoViewHolder> {
         holder.bind(foto.getName(),foto.getComment());
     }
 
+
     static class WordDiff extends DiffUtil.ItemCallback<FotoData> {
         @Override
         public boolean areItemsTheSame(@NonNull FotoData oldItem, @NonNull FotoData newItem) {
