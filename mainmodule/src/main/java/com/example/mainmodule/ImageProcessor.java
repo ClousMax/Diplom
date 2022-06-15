@@ -21,6 +21,7 @@ import java.io.IOException;
 
 public class ImageProcessor {
 
+
     Context context;
 
     public ImageProcessor(Activity activity)

@@ -21,6 +21,7 @@ public class FotoViewHolder extends RecyclerView.ViewHolder {
         commentView.setText(comm);
 
     }
+
     static FotoViewHolder create(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recycler_view_item, parent, false);

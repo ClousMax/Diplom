@@ -6,15 +6,17 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.os.Bundle;
+
 import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
 //Создание списка
-    FotoViewModel mFotoViewModel;
     RecyclerView recyclerView;
+//    ArrayList<photoData> photoDt = new ArrayList<photoData>();
+    private FotoViewModel mFotoViewModel;
+    public static final int NEW_WORD_ACTIVITY_REQUEST_CODE = 1;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,9 +43,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 Intent intent = new Intent(MainActivity.this, Activity_2.class);
-                startActivity(intent);
 
+    Bundle bundle = new Bundle();
+//                bundle.putSerializable("photoData", photoDt);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                    
             }
         });
+
         }
 }

@@ -22,6 +22,7 @@ public class photoData implements Serializable {
         this.photo_res = photo_res;
     }
 
+    
     public String getName() {
         return this.name;
     }

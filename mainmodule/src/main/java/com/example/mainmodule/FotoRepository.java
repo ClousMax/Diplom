@@ -29,8 +29,7 @@ public class FotoRepository {
         });
     }
 
-
-    void deleteItem(FotoData foto) {
+void deleteItem(FotoData foto) {
         fotoRoomDatabase.databaseWriteExecutor.execute(() -> {
             mFotoDao.deleteItem(foto);
         });

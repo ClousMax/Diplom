@@ -7,11 +7,15 @@
         <deviceKey>
           <Key>
             <type value="VIRTUAL_DEVICE_PATH" />
-            <value value="C:\Users\clous\.android\avd\Pixel_4_API_30.avd" />
+            <value value="D:\kotlin_projects\.android\avd\Pixel_2_API_30.avd" />
           </Key>
         </deviceKey>
       </Target>
     </targetSelectedWithDropDown>
+<<<<<<< HEAD
     <timeTargetWasSelectedWithDropDown value="2022-06-14T18:34:00.096979700Z" />
+=======
+    <timeTargetWasSelectedWithDropDown value="2022-06-12T11:48:49.875326900Z" />
+>>>>>>> 89d99f5ca501a41ba9aa47cf63fbaf713281801c
   </component>
 </project>
