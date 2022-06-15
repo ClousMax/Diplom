@@ -1,15 +1,12 @@
 package com.example.mainmodule;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-
+import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,29 +19,16 @@ import android.widget.ImageView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.gson.Gson;
-import com.squareup.picasso.Picasso;
 
-import org.opencv.android.Utils;
-import org.opencv.core.CvType;
 import org.opencv.core.Mat;
-
-import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 
-import okhttp3.Call;
-import okhttp3.Response;
 
 public class Activity_2 extends AppCompatActivity {
 
-    public static final String EXTRA_REPLY1 = "com.example.android.wordlistsql.REPLY1";
-    public static final String EXTRA_REPLY2 = "com.example.android.wordlistsql.REPLY2";
     private static final int REQUEST_TAKE_PHOTO = 1;
     private static final int REQUEST_GALLERY_PHOTO = 2;
     private ImageView imageView;
-    //Список
-    ArrayList<photoData> photoDat = new ArrayList<photoData>();
 
     @SuppressLint("StaticFieldLeak")
     @Override
@@ -52,22 +36,11 @@ public class Activity_2 extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_2);
-
-        //получение значения из arrayList из mainactivity
-
-        Intent intent = this.getIntent();
-        Bundle bundle = intent.getExtras();
-        if(bundle!=null){
-            photoDat = (ArrayList<photoData>) bundle.getSerializable("photoData");
-        }
-
         imageView = findViewById(R.id.imageView);
-        //Picasso.get().load(R.drawable.eagle).into(imageView);
 
         getSupportActionBar().setTitle("Второстепенный экран"); // for set actionbar title
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Использование адаптера для RecyclerView
 
 
 //Кнопка сделать изображение
@@ -102,7 +75,6 @@ public class Activity_2 extends AppCompatActivity {
                 ImageView imag = (ImageView) findViewById(R.id.imageView);
                 if (imag.getDrawable() != null){
                     Bitmap bitmap = ((BitmapDrawable)imag.getDrawable()).getBitmap();
-
                     ImageProcessor imgProcessor = new ImageProcessor(Activity_2.this);
                     Mat img = imgProcessor.bitmapToMat(bitmap);
                     String base64Image =  imgProcessor.cv2ImageTobase64(img, ".jpg");
@@ -126,35 +98,31 @@ public class Activity_2 extends AppCompatActivity {
                             });}
             }
         });
-//Кнопка продолжить
+//Кнопка продолжить и переслать данные
         Button continueBtn = findViewById(R.id.continueBTN);
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 TextInputEditText name = (TextInputEditText) findViewById(R.id.TextInputName);
                 TextInputEditText comment = (TextInputEditText) findViewById(R.id.TextInputComments);
+                ImageView imag = (ImageView) findViewById(R.id.imageView);
+                if (imag.getDrawable() != null || !TextUtils.isEmpty(name.getText().toString())){
+                    //Создаём ViewModel и добавляем в него имя и комментарий
+                    FotoViewModel mFotoViewModel = new ViewModelProvider(Activity_2.this).get(FotoViewModel.class);
+                    mFotoViewModel.insert(new FotoData(name.getText().toString(), comment.getText().toString()));
 
-
-              /*  photoData photo = new photoData(name.getText().toString(),comment.getText().toString(),14,R.drawable.eagle);
-                photoDat.add(photo);
-                //посылка значения в mainactivity И ОТРКРЫТИЕ ТРЕТЬЕЙ АКТИВНОСТИ
-                Intent intent = new Intent(Activity_2.this, ActivityPhoto.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("value", photoDat);
-                intent.putExtras(bundle);
-                startActivity(intent); */
-
-
+                    Intent intent = new Intent(Activity_2.this, MainActivity.class);
+                    startActivity(intent);
+                }
             }
         });
-
-    }
+}
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK) {
-            // Фотка сделана, извлекаем миниатюру картинки
+            // Фото сделана, извлекаем миниатюру картинки
             Bundle extras = data.getExtras();
             Bitmap thumbnailBitmap = (Bitmap) extras.get("data");
             imageView.setImageBitmap(thumbnailBitmap);

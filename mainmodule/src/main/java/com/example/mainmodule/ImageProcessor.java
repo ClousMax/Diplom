@@ -91,7 +91,7 @@ public class ImageProcessor {
     {
         byte[] bytes;
         bytes = Base64.decode(image, Base64.DEFAULT);
-        Mat mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.IMREAD_GRAYSCALE);
+        Mat mat = Imgcodecs.imdecode(new MatOfByte(bytes), Imgcodecs.IMREAD_COLOR);
         return mat;
     }
 }

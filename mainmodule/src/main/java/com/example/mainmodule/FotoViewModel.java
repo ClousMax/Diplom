@@ -21,5 +21,6 @@ public class FotoViewModel extends AndroidViewModel {
 
     public void insert(FotoData foto) { mRepository.insert(foto); }
     public void deleteItem(FotoData foto) { mRepository.deleteItem(foto); }
+    public void deleteAll(){mRepository.deleteAll();}
 
 }

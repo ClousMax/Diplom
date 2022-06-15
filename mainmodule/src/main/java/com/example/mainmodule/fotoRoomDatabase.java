@@ -1,17 +1,15 @@
 package com.example.mainmodule;
 
 import android.content.Context;
-
 import androidx.annotation.NonNull;
 import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-@Database(entities = {FotoData.class}, version = 1, exportSchema = false)
+@Database(entities = {FotoData.class}, version = 2, exportSchema = false)
 public abstract class fotoRoomDatabase extends RoomDatabase {
 
      abstract FotoDao fotoDao();
@@ -27,7 +25,7 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
             synchronized (fotoRoomDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    fotoRoomDatabase.class, "foto_database")
+                                    fotoRoomDatabase.class, "fotoss_database")
                             .addCallback(sFotoDatabaseCallback)
                             .build();
 
@@ -37,10 +35,10 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
         return INSTANCE;
     }
     private static fotoRoomDatabase.Callback sFotoDatabaseCallback = new fotoRoomDatabase.Callback() {
+
         @Override
         public void onCreate(@NonNull SupportSQLiteDatabase db) {
             super.onCreate(db);
-
             // If you want to keep data through app restarts,
             // comment out the following block
             databaseWriteExecutor.execute(() -> {
@@ -48,9 +46,9 @@ public abstract class fotoRoomDatabase extends RoomDatabase {
                 // If you want to start with more words, just add them.
                 FotoDao dao = INSTANCE.fotoDao();
                 dao.deleteAll();
-
-                FotoData word = new FotoData("Name","Kek");
+                FotoData word = new FotoData("Name","Test");
                 dao.insert(word);
+
             });
         }
     };

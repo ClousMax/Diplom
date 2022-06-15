@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.ListAdapter;
 
 public class FotoListAdapter extends ListAdapter<FotoData, FotoViewHolder> {
+
+
     public FotoListAdapter(@NonNull DiffUtil.ItemCallback<FotoData> diffCallback) {
         super(diffCallback);
     }
@@ -19,6 +21,7 @@ public class FotoListAdapter extends ListAdapter<FotoData, FotoViewHolder> {
         FotoData foto = getItem(position);
         holder.bind(foto.getName(),foto.getComment());
     }
+
     static class WordDiff extends DiffUtil.ItemCallback<FotoData> {
         @Override
         public boolean areItemsTheSame(@NonNull FotoData oldItem, @NonNull FotoData newItem) {
